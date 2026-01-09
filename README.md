@@ -27,3 +27,31 @@ It also adds the ability to change characters and view resource consumption via 
 A detailed explanation of how the demo works is available on the itch.io page indicated.
 
 Feel free to check it out in either of its two versions, Windows or Linux.
+
+====================================================================================
+
+Esta utilidad consta de una escena con barra de progreso, una animación de imagen y un script que gestiona la precarga de la escena y la precompilación del shader.
+
+Para ello, se deben configurar los siguientes parámetros:
+
+* _progress_speed : float -> Indica la velocidad a la que se completa la barra de progreso para indicar el progreso de este proceso. El tiempo de precarga determinará el tiempo transcurrido. Con este parámetro se puede ralentizar la animación del proceso de precarga y precompilación.
+
+* _scene_path : String -> Indica la escena que se cargará una vez finalizado el proceso de precarga y precompilación.
+
+* _scene_paths : Array[String] -> Indica la lista de escenas que se precargarán.
+
+* _materials : Array[String] -> Indica la lista de materiales que se precompilarán.
+
+Si se crea una carga automática llamada GameInstance, esta puede contener la declaración de las variables _scene_path, _scene_paths y _materials. En este caso, se tendrán en cuenta en lugar de las definidas en la propia utilidad. (_progress_speed solo se puede configurar en la utilidad).
+
+Ten en cuenta que si quieres reutilizar la utilidad para la transición entre diferentes niveles, esta es la forma más conveniente, en lugar de duplicarla, renombrarla y usar diferentes copias para cada transición.
+
+Si la utilidad solo se necesita para una pantalla inicial de precarga y precompilación, la forma más conveniente sería configurar las variables en la utilidad.
+
+Esta utilidad se ha probado en https://jocarpe.itch.io/third-person-character-demo
+
+Esta es una demo en desarrollo continuo para probar todos los componentes desarrollados y en proceso de desarrollo futuro.
+
+También añade la posibilidad de cambiar personajes y ver el consumo de recursos mediante un plugin.
+
+Puedes encontrar una explicación detallada del funcionamiento de la demo en la página de itch.io indicada. No dudes en probarlo en cualquiera de sus dos versiones: Windows o Linux.
