@@ -15,9 +15,9 @@ extends Node3D
 
 # Configures the speed at which the progress bar animation will play
 ## Configures the speed at which the progress bar animation will play for scenes (prefabs)
-@export_range(0.01,5.0) var progress_time_scenes : float = 2.0
+@export_range(0.01,5.0) var progress_time_scenes : float = 1.0
 ## Configures the speed at which the progress bar animation will play for materials
-@export_range(0.01,5.0) var progress_time_materials : float = 0.25
+@export_range(0.01,5.0) var progress_time_materials : float = 0.2
 
 # Variable to assign the .tres files from the Inspector
 ## Variable to assign the .tres files from the Inspector
@@ -72,8 +72,8 @@ var _progress2_value : float = 0.0
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST :
-		if get_node_or_null("/root/MyLogger") != null : MyLogger.info(" LoadingScreen Exiting : " + name + " ..." , 'LoadingScreen.gd',75,true)
-		else : print("[INFO]", " LoadingScreen Exiting : " + name + " ...", 'LoadingScreen.gd(75)')
+		if Engine.has_singleton("MyLogger"): MyLogger.info(" LoadingScreen Exiting : " + name + " ..." , 'LoadingScreen.gd',75,true)
+		else : print("[INFO] ", " LoadingScreen Exiting : " + name + " ...", ' LoadingScreen.gd (75)')
 
 
 func _ready() -> void:
@@ -91,7 +91,7 @@ func _ready() -> void:
 
 		var error_msg = "CRITICAL ERROR: Missing Autoloads : " + str(missing_globals)
 		
-		if get_node_or_null("/root/MyLogger") != null : MyLogger.error(error_msg, 'LoadingScreen.gd', 83, true)
+		if Engine.has_singleton("MyLogger"): MyLogger.error(error_msg, 'LoadingScreen.gd', 83, true)
 		else : printerr("[ERROR] ", error_msg)
 		
 		# Opcional: Mostrar el error en la UI para que el tester sepa qué pasa
@@ -120,8 +120,8 @@ func _ready() -> void:
 		_meshes_to_store = data_resource.meshes_to_store
 		
 		# The loading Screen is loaded form the Project settings
-		if get_node_or_null("/root/MyLogger") != null : MyLogger.info(name + " Instantiated ... ","LoadingScreen.gd",95, true)
-		else : print("[INFO]",name + " Instantiated ... ",'LoadingScreen.gd(96)')
+		if Engine.has_singleton("MyLogger"): MyLogger.info(name + " Instantiated ... ","LoadingScreen.gd",95, true)
+		else : print("[INFO] ",name + " Instantiated ... ",' LoadingScreen.gd (96)')
 
 		# Setting the loading screen camera
 		var camera = get_node("Camera3D")
@@ -160,8 +160,8 @@ func _ready() -> void:
 
 	else :
 		# The data resource object has not been defined
-		if get_node_or_null("/root/MyLogger") != null : MyLogger.error("The necessary resources have not been defined on the loading screen",'LoadindScreen.gd',135, true)
-		else : printerr("[ERROR]","The necessary resources have not been defined on the loading screen", 'LoadindScreen.gd (136)')
+		if Engine.has_singleton("MyLogger"): MyLogger.error("The necessary resources have not been defined on the loading screen",'LoadindScreen.gd',163)
+		else : printerr("[ERROR] ","The necessary resources have not been defined on the loading screen", 'LoadindScreen.gd (136)')
 		
 		# We exit the application if this error occurs
 		if GameInstance._quit_gracefully : GameInstance._quit_gracefully()
@@ -233,8 +233,8 @@ func _launch_loading() :
 # This function is used to load a prefab scene as argument receives the prefab path
 func _load_scene(path : String) :
 
-	if get_node_or_null("/root/MyLogger") != null : MyLogger.info("The prefab : " + path + " is being LOADED",'LoadingScreen.gd',206,true)
-	else : print("[INFO]","The prefab : " + path + " is being LOADED", 'LoadindScreen.gd (207)')
+	if Engine.has_singleton("MyLogger"): MyLogger.info("The prefab : " + path + " is being LOADED",'LoadingScreen.gd',206,true)
+	else : print("[INFO] ","The prefab : " + path + " is being LOADED", 'LoadindScreen.gd (207)')
 
 	# Doing the request to load the prefab
 	# The prefab loading is asynchronous and is managed from _process
@@ -250,8 +250,8 @@ func _load_scene(path : String) :
 		# Although meshes can be specified by string, it makes sense to pass the mesh directly so the process can be synchronous
 		for mesh_data in _meshes_to_store[path.get_file().get_basename()] :
 
-			if get_node_or_null("/root/MyLogger") != null : MyLogger.info("The mesh : " + str(mesh_data) + " is being LOADED",'LoadingScreen.gd',140,true)
-			else : print("[INFO]","The mesh : " + str(mesh_data) + " is being LOADED", 'LoadindScreen.gd (140)')
+			if Engine.has_singleton("MyLogger"): MyLogger.info("The mesh : " + str(mesh_data) + " is being LOADED",'LoadingScreen.gd',140,true)
+			else : print("[INFO] ","The mesh : " + str(mesh_data) + " is being LOADED", 'LoadindScreen.gd (140)')
 
 			var mesh_resource: Mesh
 		
@@ -263,16 +263,16 @@ func _load_scene(path : String) :
 			
 			if mesh_resource :
 
-				if get_node_or_null("/root/MyLogger") != null : MyLogger.info("The mesh : " + str(mesh_resource) + " has been stored in memory",'LoadingScreen.gd',233,true)
-				else : print("[INFO]","The mesh : " + str(mesh_resource) + " has been stored in memory", 'LoadindScreen.gd (234)')
+				if Engine.has_singleton("MyLogger"): MyLogger.info("The mesh : " + str(mesh_resource) + " has been stored in memory",'LoadingScreen.gd',233,true)
+				else : print("[INFO] ","The mesh : " + str(mesh_resource) + " has been stored in memory", 'LoadindScreen.gd (234)')
 				
 				# We added the meshes to GameInstance
 				if GameInstance._meshes is Array : GameInstance._meshes.append(mesh_resource)
 
 			else:
 
-				if get_node_or_null("/root/MyLogger") != null : MyLogger.error("Mesh loading failed : " + str(mesh_data), "LoadingScreen.gd", 241, true)
-				else : printerr("[ERROR]","Mesh loading failed : " + str(mesh_data), 'LoadindScreen.gd (242)')
+				if Engine.has_singleton("MyLogger"): MyLogger.error("Mesh loading failed : " + str(mesh_data), "LoadingScreen.gd", 241, true)
+				else : printerr("[ERROR] ","Mesh loading failed : " + str(mesh_data), 'LoadindScreen.gd (242)')
 
 # Función para cargar un material
 func _load_material(path : String) :
@@ -280,15 +280,17 @@ func _load_material(path : String) :
 	# An asynchronous request is made to load the material, as in prefabs, and is managed by _process
 	ResourceLoader.load_threaded_request(path, "", true)
 	
-	if get_node_or_null("/root/MyLogger") != null : MyLogger.info("The material : " + path + " is being LOADED","LoadingScreen.gd", 253)
-	else : print("[INFO]","The material : " + path + " is being LOADED", 'LoadindScreen.gd (254)')
+	if Engine.has_singleton("MyLogger"): MyLogger.info("The material : " + path + " is being LOADED","LoadingScreen.gd", 253)
+	else : print("[INFO] ","The material : " + path + " is being LOADED", 'LoadindScreen.gd (254)')
 
 
 
 var tween1_in_action = false
 var tween2_in_action = false
 var _active_tween1: Tween
+
 var _last_reported_progress1 : float = -1.0
+var current_progress : float = -1.0
 
 # Executed each frame, main function that handles the loading and compiling process both prefabs and materials
 func _process(_delta: float):
@@ -309,46 +311,60 @@ func _process(_delta: float):
 			# We are loading scenes...
 			status = ResourceLoader.load_threaded_get_status(_scene_paths[_scene_index], progress)
 
-			var current_progress : float = progress[0] * 100.0
-			if abs(current_progress - _last_reported_progress1) > 0.1:
+			# If the percentage load difference between frames does not exceed 10%
+				# We're not creating a new tween to save resources; at most we'll have 10 tweens per prefab
+				# We check if the failure to increase progress sufficiently is due to a failure, in which case we exit indicating the error
+				# We check if the reason the progress isn't increasing enough is because it has been loaded but hasn't exceeded 10% since the previous frame, so we set the percentage to 100.0% 
+					# In that case, we force bar 1 to reach 100.0 in the next frame
+			if current_progress < 100.0 : current_progress = progress[0] * 100.0
+			if abs(current_progress - _last_reported_progress1) > 10 :
+
 				_last_reported_progress1 = current_progress
 				_progress1_value = current_progress
 
-			if status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED :
-				if get_node_or_null("/root/MyLogger") != null : MyLogger.error("Error al cargar el prefab : " + str(_scene_paths[_scene_index]), 'LoadingScreen.gd', 296, true)
-				else : printerr("[ERROR]", "Error al cargar el prefab : " + str(_scene_paths[_scene_index]),'LoadingScreen.gd (297)' )
-					
-			# Put the progress bar to 100% 
-			# progress_time_scenes is the time the progress bar animation needs for each prefab (configurable)
-			if not tween1_in_action :
-				tween1_in_action = true
-				
-				# Perhaps there wasn't enough time to reset progress_bar1 in "launch_loading", we'll do it here
-				if progress_bar1.value >= 99.0: progress_bar1.value = 0
+				# Put the progress bar to 100% 
+				# progress_time_scenes is the time the progress bar animation needs for each prefab (configurable)
+				if not tween1_in_action : 
+					tween1_in_action = true
 
-				if _active_tween1: _active_tween1.kill()
-				var tween = create_tween()
+					# Perhaps there wasn't enough time to reset progress_bar1 in "launch_loading", we'll do it here
+					if progress_bar1.value == 100.0: progress_bar1.value = 0
 
-				# We set it to 101 so that it can never be zero and the bar remains locked
-				tween.tween_property(progress_bar1, "value", 100.0, ((101.0 - progress_bar1.value)/100.0) * progress_time_scenes).set_trans(Tween.TRANS_LINEAR)
+					if _active_tween1: _active_tween1.kill()
+					var tween = create_tween()
 
-			# Progress bar two management
-			# If there are no materials the bar 2 goes to 100% depending of _scene_index
-			# If there are materials the bar 2 goes to 50% depending of _scene_index
-			if _materials.size() == 0 :
-				_progress2_value = (float) (_scene_index + 1) * 100.0 / _scene_paths.size()
-			else :
-				_progress2_value = (float) (_scene_index + 1) * 50.0 / _scene_paths.size()
+					# We set it to 110 so that at minimum we hace a speed of 0.1 * progress_time_scenes and at a maximum of 1.1 * progress_time
+					tween.tween_property(progress_bar1, "value", _progress1_value, ((110.0 - progress_bar1.value)/100.0) * progress_time_scenes).set_trans(Tween.TRANS_LINEAR)
 
-			# The progress bar speed is ajusted so that both progress bar run synchronized
-			if not tween2_in_action :
-				tween2_in_action = true
-				var tween2 = create_tween()
-				tween2.tween_property(progress_bar2, "value", _progress2_value, progress_time_scenes).set_trans(Tween.TRANS_LINEAR)
+				# Progress bar two management
+				# If there are no materials the bar 2 goes to 100% depending of _scene_index
+				# If there are materials the bar 2 goes to 50% depending of _scene_index
+				if _materials.size() == 0 :
+					_progress2_value = (float) (_scene_index + 1) * 100.0 / _scene_paths.size()
+				else :
+					_progress2_value = (float) (_scene_index + 1) * 50.0 / _scene_paths.size()
+
+				# The progress bar speed is ajusted so that both progress bar run synchronized
+				if not tween2_in_action :
+					tween2_in_action = true
+					var tween2 = create_tween()
+					tween2.tween_property(progress_bar2, "value", _progress2_value, progress_time_scenes).set_trans(Tween.TRANS_LINEAR)
+
+			else : 
+
+				if status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED :
+					_progress1_value = 100.0
+					_last_reported_progress1 = -1.0
+
+				if status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED :
+					if Engine.has_singleton("MyLogger"): MyLogger.error("Error loading prefab : " + str(_scene_paths[_scene_index]), 'LoadingScreen.gd', 360, true)
+					else : printerr("[ERROR] ", "Error loading prefab :" + str(_scene_paths[_scene_index]),' LoadingScreen.gd (361)' )
+					if GameInstance._quit_gracefully : GameInstance._quit_gracefully()
+					else : get_tree().quit()
 
 
-			# Only when the second bar arrives the corresponding value it goes to the next step
-			# Offset of a 1% for progress bar 2
+			# Only when the second bar arrives the corresponding value and the progress_bar1 arrives 100.0 it goes to the next step
+			# Offset of a 0.1 for progress both bars, that is, it must reach or exceed 99.9%.
 			if abs(progress_bar2.value - _progress2_value) < 0.1 and abs(progress_bar1.value - 100.0) < 0.1 :
 
 				_scene_index += 1
@@ -360,12 +376,18 @@ func _process(_delta: float):
 						var key = _scene_paths_element.get_file().get_basename()
 							
 						if GameInstance._prefabs is Dictionary : GameInstance._prefabs[key] = prefabObj.instantiate()
+
+						if prefabObj in data_resource.prefabs_to_script_execution :
+							add_child(GameInstance._prefabs[key])
+							remove_child(GameInstance._prefabs[key])
+							GameInstance._prefabs[key].queue_free()
+							GameInstance._prefabs.erase(key)
 							
-						if get_node_or_null("/root/MyLogger") != null : MyLogger.info("Prefab stored: " + key, 'LoadingScreen.gd', 335, true)
-						else : print("[INFO]","Prefab stored: " + key, 'LoadindScreen.gd (336)')
+						if Engine.has_singleton("MyLogger"): MyLogger.info("Prefab stored: " + key, 'LoadingScreen.gd', 335, true)
+						else : print("[INFO] ","Prefab stored: " + key, 'LoadindScreen.gd (336)')
 					else:
-						if get_node_or_null("/root/MyLogger") != null : MyLogger.error("Resource is not a PackedScene: " + _scene_paths_element, 'LoadingScreen', 338, true)
-						else : printerr("[ERROR]","Resource is not a PackedScene: " + _scene_paths_element, 'LoadindScreen.gd (338)')
+						if Engine.has_singleton("MyLogger"): MyLogger.error("Resource is not a PackedScene: " + _scene_paths_element, 'LoadingScreen', 338, true)
+						else : printerr("[ERROR] ","Resource is not a PackedScene: " + _scene_paths_element, 'LoadindScreen.gd (338)')
 
 				# Preparing the next progress bar simulation
 				tween1_in_action = false
@@ -378,36 +400,44 @@ func _process(_delta: float):
 
 			# Shaders compiling...
 			# The Progress Bar 1 involves all the materials compilation
-			# Progress Bar 1 is used to show the process of material compilation
-			_progress1_value = (_material_index as float + 1.0) * 100.0 / _materials.size() as float
-			if _progress1_value > 100.0 : _progress1_value = 100.0
+			# Progress Bar 1 is used to show the process of material compilation from 1 to 100%
+			# Progress Bar 2 is used to show the process of material compilation from 50% to 100%
+
 			
-			# The second bar only used if previous scenes where preloaded, in this case t goes from 50% to 100%
-			# If no scenes are being preloaded the second bar is not shown, just simply is set yo 100% but not used
-			if (_scene_paths.size() > 0) : _progress2_value = 50.0 + (_progress1_value / 2)
-			else : _progress2_value = 100.0
+			_progress1_value = (_material_index as float) * 100.0 / _materials.size() as float
+			if _progress1_value != _last_reported_progress1 :
+				_last_reported_progress1 = _progress1_value
+			
+				# The second bar only used if previous scenes where preloaded, in this case t goes from 50% to 100%
+				# If no scenes are being preloaded the second bar is not shown, just simply is set yo 100% but not used
+				if (_scene_paths.size() > 0) : _progress2_value = 50.0 + (_progress1_value / 2)
+				else : _progress2_value = 100.0
 
-			# The progress bar 1 in action...
-			if not tween1_in_action :
-				tween1_in_action = true
-				var tween = create_tween()
-				tween.tween_property(progress_bar1, "value", _progress1_value, progress_time_materials).set_trans(Tween.TRANS_LINEAR)
-
-			# The progress bar 2 only in action if there were scenes preloaded
-			if (_scene_paths.size() > 0) :
-				if not tween2_in_action :
-					tween2_in_action = true
+				# We won't launch a new tween until the progress bar is updated.
+				# The progress bar 1 in action...
+				if not tween1_in_action :
+					tween1_in_action = true
+					if _active_tween1: _active_tween1.kill()
 					var tween = create_tween()
-					tween.tween_property(progress_bar2, "value", _progress2_value, progress_time_materials).set_trans(Tween.TRANS_LINEAR)
+					tween.tween_property(progress_bar1, "value", _progress1_value, progress_time_materials).set_trans(Tween.TRANS_LINEAR)
+
+				# The progress bar 2 only in action if there were scenes preloaded
+				if (_scene_paths.size() > 0) :
+					if not tween2_in_action :
+						tween2_in_action = true
+						var tween = create_tween()
+						tween.tween_property(progress_bar2, "value", _progress2_value, progress_time_materials).set_trans(Tween.TRANS_LINEAR)
 
 			# Order to precompile the material once is loaded and the progress_bar arrives its corresponding value
 			if _material_index < _materials.size() :
 
-				# If we have a valid material
+				# If we have a valid material we do the request
 				status = ResourceLoader.load_threaded_get_status(_materials[_material_index].resource_path, progress)
 
-				# if is loaded and the progress bar has arrived the target controlled via the progress bar 1, it is used the round function to avoid difference in decimals
+				# Hasta que no está cargado no entramos aqui mientras se va aumentando la barra 1
 				if status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED : 
+					
+					# Offset of a 0.1 for progress both bars, that is, it must reach or exceed 99.9%.
 					if abs(progress_bar1.value - _progress1_value) < 0.1 : 
 
 						# The compilation is being done via the _precompile_material function
@@ -426,6 +456,7 @@ func _process(_delta: float):
 
 			# If we dont have any more material and the progress bar has arrived to 100%
 			# This is needed because we wait until bar2 arrives 100% once all materials are loaded
+			# Offset of a 0.1 for progress both bars, that is, it must reach or exceed 99.9%.
 			elif abs(progress_bar1.value - 100.0) < 0.1 :
 				screenLoaded.emit()
 				
@@ -472,16 +503,16 @@ func pre_compile_materials(materials_list: Array[Material]) :
 		RenderingServer.free_rid(rid)
 	RenderingServer.free_rid(mesh_rid)
 
-	if get_node_or_null("/root/MyLogger") != null : MyLogger.info("Shader compilation complete.", "LoadingScreen.gd", 445, true)
-	print("[INFO]","Shader compilation complete.","LoadingScreen.gd (446)")
+	if Engine.has_singleton("MyLogger"): MyLogger.info("Shader compilation complete.", "LoadingScreen.gd", 445, true)
+	print("[INFO] ","Shader compilation complete."," LoadingScreen.gd (446)")
 
 
 
 # Precompilar un material en la primera compilación
 func _precompile_material(mat : Material) -> void :
 	if mat == null:
-		if get_node_or_null("/root/MyLogger") != null : MyLogger.error("Failed to compile: Material is null", "LoadingScreen.gd", 368, true)
-		else : printerr("[ERROR]","Failed to compile: Material is null", 'LoadindScreen.gd (368)')
+		if Engine.has_singleton("MyLogger"): MyLogger.error("Failed to compile: Material is null", "LoadingScreen.gd", 368, true)
+		else : printerr("[ERROR] ","Failed to compile: Material is null", 'LoadindScreen.gd (368)')
 		return 
 
 	# Se almacena el material en GameInstance
@@ -518,7 +549,7 @@ func _add_material(mat: Material) -> void:
 	newMesh.position = Vector3(randf(), randf(), randf()*-100.0)
 	
 	# Optional: Keep the label updated
-	label2.text = "Compiling... " + mat.resource_path.get_file().get_basename()
+	label2.text = "Compiling... " + mat.resource_path.get_file()
 
 	# Store the reference so we can delete it later
 	_temp_compiler_meshes_to_store.append(newMesh)
@@ -540,8 +571,8 @@ func _finalize_and_exit() :
 
 func _prepare_for_exit() :
 
-	if get_node_or_null("/root/MyLogger") != null : MyLogger.info("LoadingScreen Exiting: " + name + " ... Freeing temporal meshes", 'LoadingScreen.gd', 413, true)
-	else : print("[INFO]","LoadingScreen Exiting: " + name + " ... Freeing temporal meshes",'LoadingScreen.gd(413)')
+	if Engine.has_singleton("MyLogger"): MyLogger.info("LoadingScreen Exiting: " + name + " ... Freeing temporal meshes", 'LoadingScreen.gd', 413, true)
+	else : print("[INFO] ","LoadingScreen Exiting: " + name + " ... Freeing temporal meshes",' LoadingScreen.gd (413)')
 
 	# We carried out the second compilation
 	if GameInstance._materials is Array : await pre_compile_materials(GameInstance._materials)
