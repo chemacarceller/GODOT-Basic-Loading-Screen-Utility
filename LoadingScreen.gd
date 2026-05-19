@@ -374,12 +374,16 @@ func _process(_delta: float):
 					var prefabObj = ResourceLoader.load_threaded_get(_scene_paths_element)
 					if prefabObj is PackedScene :
 						var key = _scene_paths_element.get_file().get_basename()
-							
+
+						# Se instancia el prefab y se almacena en GameInstance_prefabs
 						if GameInstance._prefabs is Dictionary : GameInstance._prefabs[key] = prefabObj.instantiate()
 
+						# If it's not a prefab that you want to keep in memory, just put it in and take it out of the scene to run scripts, for example.
 						if prefabObj in data_resource.prefabs_to_script_execution :
 							add_child(GameInstance._prefabs[key])
 							remove_child(GameInstance._prefabs[key])
+							
+							# The GameInstance._prefabs element is released from memory and deleted from the dictionary.
 							GameInstance._prefabs[key].queue_free()
 							GameInstance._prefabs.erase(key)
 							

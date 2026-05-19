@@ -21,16 +21,15 @@
 [ext_resource type="Material" uid="uid://xgmw8ejsgypo" path="res://main/prefabs/weapons/assault_rifle/materials/DarkMetal.tres" id="11_y5sgl"]
 [ext_resource type="Material" uid="uid://ctdrrpwrcej4g" path="res://main/prefabs/weapons/assault_rifle/materials/DarkWood.tres" id="12_6asof"]
 [ext_resource type="Material" uid="uid://2kymye867ur4" path="res://main/prefabs/weapons/assault_rifle/materials/Metal.tres" id="13_5i1j5"]
-[ext_resource type="PackedScene" uid="uid://bb4nhjv27qv04" path="res://main/levels/mainlevel/main_environment.tscn" id="22_71doo"]
+[ext_resource type="PackedScene" uid="uid://bb4nhjv27qv04" path="res://main/levels/mainlevel/mainenvironment.tscn" id="22_71doo"]
 [ext_resource type="Material" uid="uid://b43g1osfgpy2c" path="res://main/levels/mainlevel/world/materials/worldmap1.tres" id="23_x3q8t"]
 [ext_resource type="Material" uid="uid://cmnbvj471w0l" path="res://main/levels/mainlevel/world/materials/worldmap2.tres" id="24_6wbep"]
-[ext_resource type="PackedScene" uid="uid://dbyn616ao2mjx" path="res://main/levels/secondlevel/second_environment.tscn" id="24_kvkeh"]
-[ext_resource type="Environment" uid="uid://bxnp0owt52yky" path="res://main/levels/mainlevel/main_environment.tres" id="25_1kd8i"]
-[ext_resource type="PackedScene" uid="uid://f85uo8o1u517" path="res://main/prefabs/weapons/assault_rifle/assault_rifle.tscn" id="31_f6wa8"]
+[ext_resource type="PackedScene" uid="uid://dbyn616ao2mjx" path="res://main/levels/secondlevel/secondenvironment.tscn" id="24_kvkeh"]
+[ext_resource type="Environment" uid="uid://bxnp0owt52yky" path="res://main/levels/mainlevel/mainenvironment/mainenvironment.tres" id="25_1kd8i"]
 
 [sub_resource type="Resource" id="Resource_w4f6n"]
 script = ExtResource("9_vxrr8")
-prefabs_to_load = Array[PackedScene]([ExtResource("2_336nh"), ExtResource("3_w4f6n"), ExtResource("4_yr7a4"), ExtResource("5_el17l"), ExtResource("6_6ipdi"), ExtResource("31_f6wa8"), ExtResource("22_71doo"), ExtResource("24_kvkeh")])
+prefabs_to_load = Array[PackedScene]([ExtResource("2_336nh"), ExtResource("3_w4f6n"), ExtResource("4_yr7a4"), ExtResource("5_el17l"), ExtResource("6_6ipdi"), ExtResource("22_71doo"), ExtResource("24_kvkeh")])
 prefabs_to_script_execution = Array[PackedScene]([ExtResource("24_kvkeh"), ExtResource("22_71doo")])
 materials_to_compile = Array[Material]([ExtResource("2_mhmf7"), ExtResource("3_6klg1"), ExtResource("4_b2vuh"), ExtResource("5_bprrj"), ExtResource("6_aywp6"), ExtResource("7_s12ua"), ExtResource("8_54aud"), ExtResource("9_unn8t"), ExtResource("10_hvaxu"), ExtResource("11_y5sgl"), ExtResource("12_6asof"), ExtResource("13_5i1j5"), ExtResource("23_x3q8t"), ExtResource("24_6wbep")])
 metadata/_custom_type_script = "uid://c4jm48yuuhjth"
