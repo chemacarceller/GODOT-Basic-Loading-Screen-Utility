@@ -72,8 +72,8 @@ var _progress2_value : float = 0.0
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST :
-		if Engine.has_singleton("MyLogger"): MyLogger.info(" LoadingScreen Exiting : " + name + " ..." , 'LoadingScreen.gd',75,true)
-		else : print("[INFO] ", " LoadingScreen Exiting : " + name + " ...", ' LoadingScreen.gd (75)')
+		MyLogger.info(" LoadingScreen Exiting : " + name + " ..." , 'LoadingScreen.gd',75,true)
+		
 
 
 func _ready() -> void:
@@ -91,8 +91,8 @@ func _ready() -> void:
 
 		var error_msg = "CRITICAL ERROR: Missing Autoloads : " + str(missing_globals)
 		
-		if Engine.has_singleton("MyLogger"): MyLogger.error(error_msg, 'LoadingScreen.gd', 83, true)
-		else : printerr("[ERROR] ", error_msg)
+		MyLogger.error(error_msg, 'LoadingScreen.gd', 83, true)
+	
 		
 		# Opcional: Mostrar el error en la UI para que el tester sepa qué pasa
 		label2.text = "System Error: Singletons are missing"
@@ -120,8 +120,8 @@ func _ready() -> void:
 		_meshes_to_store = data_resource.meshes_to_store
 		
 		# The loading Screen is loaded form the Project settings
-		if Engine.has_singleton("MyLogger"): MyLogger.info(name + " Instantiated ... ","LoadingScreen.gd",95, true)
-		else : print("[INFO] ",name + " Instantiated ... ",' LoadingScreen.gd (96)')
+		MyLogger.info(name + " Instantiated ... ","LoadingScreen.gd",95, true)
+
 
 		# Setting the loading screen camera
 		var camera = get_node("Camera3D")
@@ -160,8 +160,8 @@ func _ready() -> void:
 
 	else :
 		# The data resource object has not been defined
-		if Engine.has_singleton("MyLogger"): MyLogger.error("The necessary resources have not been defined on the loading screen",'LoadindScreen.gd',163)
-		else : printerr("[ERROR] ","The necessary resources have not been defined on the loading screen", 'LoadindScreen.gd (136)')
+		MyLogger.error("The necessary resources have not been defined on the loading screen",'LoadindScreen.gd',163)
+		
 		
 		# We exit the application if this error occurs
 		if GameInstance._quit_gracefully : GameInstance._quit_gracefully()
@@ -233,8 +233,8 @@ func _launch_loading() :
 # This function is used to load a prefab scene as argument receives the prefab path
 func _load_scene(path : String) :
 
-	if Engine.has_singleton("MyLogger"): MyLogger.info("The prefab : " + path + " is being LOADED",'LoadingScreen.gd',206,true)
-	else : print("[INFO] ","The prefab : " + path + " is being LOADED", 'LoadindScreen.gd (207)')
+	MyLogger.info("The prefab : " + path + " is being LOADED",'LoadingScreen.gd',206,true)
+	
 
 	# Doing the request to load the prefab
 	# The prefab loading is asynchronous and is managed from _process
@@ -250,8 +250,8 @@ func _load_scene(path : String) :
 		# Although meshes can be specified by string, it makes sense to pass the mesh directly so the process can be synchronous
 		for mesh_data in _meshes_to_store[path.get_file().get_basename()] :
 
-			if Engine.has_singleton("MyLogger"): MyLogger.info("The mesh : " + str(mesh_data) + " is being LOADED",'LoadingScreen.gd',140,true)
-			else : print("[INFO] ","The mesh : " + str(mesh_data) + " is being LOADED", 'LoadindScreen.gd (140)')
+			MyLogger.info("The mesh : " + str(mesh_data) + " is being LOADED",'LoadingScreen.gd',140,true)
+			
 
 			var mesh_resource: Mesh
 		
@@ -263,16 +263,16 @@ func _load_scene(path : String) :
 			
 			if mesh_resource :
 
-				if Engine.has_singleton("MyLogger"): MyLogger.info("The mesh : " + str(mesh_resource) + " has been stored in memory",'LoadingScreen.gd',233,true)
-				else : print("[INFO] ","The mesh : " + str(mesh_resource) + " has been stored in memory", 'LoadindScreen.gd (234)')
+				MyLogger.info("The mesh : " + str(mesh_resource) + " has been stored in memory",'LoadingScreen.gd',233,true)
+				
 				
 				# We added the meshes to GameInstance
 				if GameInstance._meshes is Array : GameInstance._meshes.append(mesh_resource)
 
 			else:
 
-				if Engine.has_singleton("MyLogger"): MyLogger.error("Mesh loading failed : " + str(mesh_data), "LoadingScreen.gd", 241, true)
-				else : printerr("[ERROR] ","Mesh loading failed : " + str(mesh_data), 'LoadindScreen.gd (242)')
+				MyLogger.error("Mesh loading failed : " + str(mesh_data), "LoadingScreen.gd", 241, true)
+				
 
 # Función para cargar un material
 func _load_material(path : String) :
@@ -280,8 +280,8 @@ func _load_material(path : String) :
 	# An asynchronous request is made to load the material, as in prefabs, and is managed by _process
 	ResourceLoader.load_threaded_request(path, "", true)
 	
-	if Engine.has_singleton("MyLogger"): MyLogger.info("The material : " + path + " is being LOADED","LoadingScreen.gd", 253)
-	else : print("[INFO] ","The material : " + path + " is being LOADED", 'LoadindScreen.gd (254)')
+	MyLogger.info("The material : " + path + " is being LOADED","LoadingScreen.gd", 253)
+	
 
 
 
@@ -357,8 +357,8 @@ func _process(_delta: float):
 					_last_reported_progress1 = -1.0
 
 				if status == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED :
-					if Engine.has_singleton("MyLogger"): MyLogger.error("Error loading prefab : " + str(_scene_paths[_scene_index]), 'LoadingScreen.gd', 360, true)
-					else : printerr("[ERROR] ", "Error loading prefab :" + str(_scene_paths[_scene_index]),' LoadingScreen.gd (361)' )
+					MyLogger.error("Error loading prefab : " + str(_scene_paths[_scene_index]), 'LoadingScreen.gd', 360, true)
+					
 					if GameInstance._quit_gracefully : GameInstance._quit_gracefully()
 					else : get_tree().quit()
 
@@ -387,11 +387,11 @@ func _process(_delta: float):
 							GameInstance._prefabs[key].queue_free()
 							GameInstance._prefabs.erase(key)
 							
-						if Engine.has_singleton("MyLogger"): MyLogger.info("Prefab stored: " + key, 'LoadingScreen.gd', 335, true)
-						else : print("[INFO] ","Prefab stored: " + key, 'LoadindScreen.gd (336)')
+						MyLogger.info("Prefab stored: " + key, 'LoadingScreen.gd', 335, true)
+						
 					else:
-						if Engine.has_singleton("MyLogger"): MyLogger.error("Resource is not a PackedScene: " + _scene_paths_element, 'LoadingScreen', 338, true)
-						else : printerr("[ERROR] ","Resource is not a PackedScene: " + _scene_paths_element, 'LoadindScreen.gd (338)')
+						MyLogger.error("Resource is not a PackedScene: " + _scene_paths_element, 'LoadingScreen', 338, true)
+						
 
 				# Preparing the next progress bar simulation
 				tween1_in_action = false
@@ -507,16 +507,15 @@ func pre_compile_materials(materials_list: Array[Material]) :
 		RenderingServer.free_rid(rid)
 	RenderingServer.free_rid(mesh_rid)
 
-	if Engine.has_singleton("MyLogger"): MyLogger.info("Shader compilation complete.", "LoadingScreen.gd", 445, true)
-	print("[INFO] ","Shader compilation complete."," LoadingScreen.gd (446)")
+	MyLogger.info("Shader compilation complete.", "LoadingScreen.gd", 445, true)
+	
 
 
 
 # Precompilar un material en la primera compilación
 func _precompile_material(mat : Material) -> void :
 	if mat == null:
-		if Engine.has_singleton("MyLogger"): MyLogger.error("Failed to compile: Material is null", "LoadingScreen.gd", 368, true)
-		else : printerr("[ERROR] ","Failed to compile: Material is null", 'LoadindScreen.gd (368)')
+		MyLogger.error("Failed to compile: Material is null", "LoadingScreen.gd", 368, true)
 		return 
 
 	# Se almacena el material en GameInstance
@@ -575,8 +574,8 @@ func _finalize_and_exit() :
 
 func _prepare_for_exit() :
 
-	if Engine.has_singleton("MyLogger"): MyLogger.info("LoadingScreen Exiting: " + name + " ... Freeing temporal meshes", 'LoadingScreen.gd', 413, true)
-	else : print("[INFO] ","LoadingScreen Exiting: " + name + " ... Freeing temporal meshes",' LoadingScreen.gd (413)')
+	MyLogger.info("LoadingScreen Exiting: " + name + " ... Freeing temporal meshes", 'LoadingScreen.gd', 413, true)
+	
 
 	# We carried out the second compilation
 	if GameInstance._materials is Array : await pre_compile_materials(GameInstance._materials)
